@@ -1,0 +1,68 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: MoonBeans
+    network: moonbeam
+    source:
+      address: "0x65b09ef8c5A096C5Fd3A80f1F7369E56eB932412"
+      abi: MoonBeans
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ExcludeFromDividendProcessing
+        - ExcludeFromFees
+        - ExcludeMultipleAccountsFromFees
+        - FailToSend
+        - GasForProcessingUpdated
+        - LiquidityWalletUpdated
+        - OwnershipTransferred
+        - ProcessedDividendTracker
+        - SendDividends
+        - SetAutomatedMarketMakerPair
+        - SwapAndLiquify
+        - Transfer
+        - UpdateDividendTracker
+        - UpdateUniswapV2Router
+      abis:
+        - name: MoonBeans
+          file: ./abis/MoonBeans.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: ExcludeFromDividendProcessing(indexed address,bool)
+          handler: handleExcludeFromDividendProcessing
+        - event: ExcludeFromFees(indexed address,bool)
+          handler: handleExcludeFromFees
+        - event: ExcludeMultipleAccountsFromFees(address[],bool)
+          handler: handleExcludeMultipleAccountsFromFees
+        - event: FailToSend()
+          handler: handleFailToSend
+        - event: GasForProcessingUpdated(indexed uint256,indexed uint256)
+          handler: handleGasForProcessingUpdated
+        - event: LiquidityWalletUpdated(indexed address,indexed address)
+          handler: handleLiquidityWalletUpdated
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: ProcessedDividendTracker(uint256,uint256,uint256,indexed bool,uint256,indexed address)
+          handler: handleProcessedDividendTracker
+        - event: SendDividends(uint256,uint256)
+          handler: handleSendDividends
+        - event: SetAutomatedMarketMakerPair(indexed address,indexed bool)
+          handler: handleSetAutomatedMarketMakerPair
+        - event: SwapAndLiquify(uint256,uint256,uint256)
+          handler: handleSwapAndLiquify
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: UpdateDividendTracker(indexed address,indexed address)
+          handler: handleUpdateDividendTracker
+        - event: UpdateUniswapV2Router(indexed address,indexed address)
+          handler: handleUpdateUniswapV2Router
+      file: ./src/moon-beans.ts
